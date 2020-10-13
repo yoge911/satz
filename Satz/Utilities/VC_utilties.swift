@@ -127,3 +127,36 @@ extension UIViewController {
         return characterPaths
    }
 }
+
+extension UIStackView {
+    func addHorizontalSeparators(color : UIColor) {
+        var i = self.arrangedSubviews.count
+        while i >= 0 {
+            let separator = createHSeparator(color: color)
+            insertArrangedSubview(separator, at: i)
+            separator.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
+            i -= 1
+        }
+    }
+
+    func createHSeparator(color : UIColor) -> UIView {
+        let separator = UIView()
+        separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        separator.backgroundColor = color
+        return separator
+    }
+    
+    func addVerticalSeparators(color : UIColor) {
+//        var i = self.arrangedSubviews.count
+        let separator = createVSeparator(color: color)
+        insertArrangedSubview(separator, at: 1)
+        separator.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 1).isActive = true
+    }
+
+    func createVSeparator(color : UIColor) -> UIView {
+        let separator = UIView()
+        separator.widthAnchor.constraint(equalToConstant: 1).isActive = true
+        separator.backgroundColor = color
+        return separator
+    }
+}

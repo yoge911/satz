@@ -20,6 +20,7 @@
 		D21DA68124F5526F00CD6DC6 /* UserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21DA68024F5526E00CD6DC6 /* UserDataSource.swift */; };
 		D223E285252F8E22009337BF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D223E284252F8E22009337BF /* LoginViewController.swift */; };
 		D223E29E252F9A15009337BF /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D223E29D252F9A15009337BF /* RegisterViewController.swift */; };
+		D22FA8BD2535109400759971 /* SelectiveInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22FA8BC2535109400759971 /* SelectiveInterpreter.swift */; };
 		D231AEB724E464DC00D05F67 /* modalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D231AEB624E464DC00D05F67 /* modalView.swift */; };
 		D24F0C2B24F4999200F07AD6 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24F0C2A24F4999200F07AD6 /* SettingsTableViewController.swift */; };
 		D24F0C2D24F49DE500F07AD6 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24F0C2C24F49DE500F07AD6 /* Setting.swift */; };
@@ -60,6 +61,7 @@
 		D21DA68024F5526E00CD6DC6 /* UserDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataSource.swift; sourceTree = "<group>"; };
 		D223E284252F8E22009337BF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D223E29D252F9A15009337BF /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		D22FA8BC2535109400759971 /* SelectiveInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectiveInterpreter.swift; sourceTree = "<group>"; };
 		D231AEB624E464DC00D05F67 /* modalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = modalView.swift; sourceTree = "<group>"; };
 		D24F0C2A24F4999200F07AD6 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		D24F0C2C24F49DE500F07AD6 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				D2BA27B8250CE3EB000202DA /* InterpretViewController.swift */,
 				D223E284252F8E22009337BF /* LoginViewController.swift */,
 				D223E29D252F9A15009337BF /* RegisterViewController.swift */,
+				D22FA8BC2535109400759971 /* SelectiveInterpreter.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				D2BA27B9250CE3EB000202DA /* InterpretViewController.swift in Sources */,
 				D24F0C2B24F4999200F07AD6 /* SettingsTableViewController.swift in Sources */,
 				D2A6C1AB24FA9F1B0058E1B3 /* LingoModel.swift in Sources */,
+				D22FA8BD2535109400759971 /* SelectiveInterpreter.swift in Sources */,
 				D21DA68124F5526F00CD6DC6 /* UserDataSource.swift in Sources */,
 				D29AA1DA24EEA0F8000FEED4 /* FlashSettingsViewController.swift in Sources */,
 				D2091F8A24EE86CC00F433F9 /* SettingsViewController.swift in Sources */,
