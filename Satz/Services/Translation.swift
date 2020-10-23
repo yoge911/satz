@@ -78,17 +78,25 @@ class DeepLTranslator : NSObject {
     var sourceLanguage = "de"
     var targetLanguage = "en"
     var interpretMode = false
+    
+    let deepLsupportedLanguages : KeyValuePairs = [
+        "Select Language": "de",
+        "German" : "de",
+        "English": "en",
+        "Spanish": "es",
+        "French": "fr"
+    ]
         
     var translated: (() -> Void)?
     
-    func fetchTranslation(text: String, sourceLang: String? = "de", targetLang: String? = "en", interpret: Bool? = false, completion: @escaping([String]) -> Void) {
+    func fetchTranslation(text: String, sourceLang: Int? = 1, targetLang: Int? = 2, interpret: Bool? = false, completion: @escaping([String]) -> Void) {
         
         if let sourceLangCode = sourceLang {
-            sourceLanguage = sourceLangCode
+            sourceLanguage = deepLsupportedLanguages[sourceLangCode].value
         }
         
         if let targetLangCode = targetLang {
-            targetLanguage = targetLangCode
+            targetLanguage = deepLsupportedLanguages[targetLangCode].value
         }
         
         if let interpretation = interpret {
@@ -130,13 +138,16 @@ class DeepLTranslator : NSObject {
         }
         
         //DeepL API does not support "Formality" query parameter for english target language
-        if queryItems[3].value == "en" {
-             queryItems.remove(at: 4)
+        let formality_unsupported_langs = ["en", "es"]
+        if (formality_unsupported_langs.contains(queryItems[3].value!)) {
+            queryItems.remove(at: 4)
         }
+
           
         var urlComps = URLComponents(string: "https://api.deepl.com/v2/translate")!
         urlComps.queryItems = queryItems
-        let result = urlComps.url!      
+        let result = urlComps.url!
+        print(result)
         return result
     }
     

@@ -23,6 +23,7 @@ struct Glossary: Codable {
     }
 }
 
+
 struct SectionType: Codable {
     let easy: Section?
     let medium: Section?

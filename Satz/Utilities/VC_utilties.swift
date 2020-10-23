@@ -8,6 +8,7 @@
 
 import UIKit
 var activityIndicator: UIActivityIndicatorView?
+@available(iOS 11.0, *)
 extension UIView {
     
     func showSpinner() {
@@ -24,6 +25,20 @@ extension UIView {
        if let activityInd = activityIndicator {
         activityInd.removeFromSuperview()
        }
+    }
+    
+    func roundCornersCA(CA_Corners : String, radius : CGFloat) {
+        layer.cornerRadius = radius
+        if (CA_Corners == "all"){
+            layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+        }
+        if (CA_Corners == "upperhalf"){
+            layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+        }
+        if(CA_Corners == "bottomhalf"){
+            layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
+        }
+        
     }
 }
 
@@ -160,3 +175,4 @@ extension UIStackView {
         return separator
     }
 }
+

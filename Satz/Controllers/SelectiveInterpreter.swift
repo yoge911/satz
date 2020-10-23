@@ -71,14 +71,17 @@ extension SelectiveInterpreter {
     
     func createSentenceLabelObj(sentenceText: String) -> UILabel {
    
-        let originalSentenceLabel = UILabel(frame: CGRect(x: 0, y: 10, width: (self.view.frame.width / 2), height: 0))
-        originalSentenceLabel.translatesAutoresizingMaskIntoConstraints = false
+        let originalSentenceLabel = PaddingLabel(withInsets: 1,1,15,3)
+    
 //        originalSentenceLabel.backgroundColor = .cyan
         originalSentenceLabel.font = UIFont(name:"HelveticaNeue", size: 15.0)
         originalSentenceLabel.textAlignment = .left
         originalSentenceLabel.textColor = .white
         originalSentenceLabel.numberOfLines = 0
         originalSentenceLabel.text = sentenceText
+        originalSentenceLabel.layer.borderColor = UIColor.darkGray.cgColor
+        originalSentenceLabel.layer.borderWidth = 1.0
+        originalSentenceLabel.layer.cornerRadius = 10.0
         return originalSentenceLabel
     }
 }

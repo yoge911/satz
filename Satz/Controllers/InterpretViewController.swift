@@ -48,8 +48,6 @@ class InterpretViewController: UITableViewController, UITextViewDelegate {
         let text1wordsArr = self.inputText.Text.lowercased().components(separatedBy: " ")
         let text2wordsArr = self.translatedText.Text.lowercased().components(separatedBy: " ")
         self.similarityLabel.text = String(calculateJaccardRatio(text1wordsArr: text1wordsArr, text2wordsArr: text2wordsArr)) + "%"
-
-        
     }
     
     func calculateJaccardRatio(text1wordsArr: [String], text2wordsArr: [String]) -> Int{
@@ -72,13 +70,11 @@ class InterpretViewController: UITableViewController, UITextViewDelegate {
     
       func textViewDidChange(_ textView: UITextView) {
           if textView.isEqual(self.inputText) {
-             // activityIndicator.startAnimating()
               self.deeplTranslator.fetchTranslation(text: self.inputText.text, interpret: true)
               {
                   (translations) in
                   self.translatedText.text = translations[1]
-                  self.helperText.text =  translations[0]
-    
+                  self.helperText.text =  translations[0]    
               }
               
           }
@@ -88,7 +84,6 @@ class InterpretViewController: UITableViewController, UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.isEqual(self.inputText) {
             performLexicalSimilarityAnalysis()
-            //activityIndicator.stopAnimating()
         }
     }
 
