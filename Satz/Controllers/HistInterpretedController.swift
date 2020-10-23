@@ -79,9 +79,9 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
     }
     
     func translationCompletedState(textPresent: Bool) {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.AiColloquial.transform = .identity
-        })
+//        UIView.animate(withDuration: 0.2, animations: {
+//            self.AiColloquial.transform = .identity
+//        })
         
         if (!textPresent) {
             self.typeHereIndicator.isHidden = false
@@ -93,7 +93,7 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
     }
 
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        translationTriggerAnimations()
+        //translationTriggerAnimations()
         self.typeHereIndicator.isHidden = true
         self.clearButton.isHidden = false
         return true
