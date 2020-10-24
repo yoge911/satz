@@ -22,7 +22,8 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var refLanguageTextField: UITextField!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var introductionView: UIView!
-
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var scroller: UIScrollView!
     
     var referenceTranslationHidden = false
     let deeplTranslator = DeepLTranslator()
@@ -37,7 +38,7 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         
         
-        
+        //contentView.backgroundColor = UIColor.systemPink
         self.hideKeyboardWhenTappedAround()
         self.clearButton.isHidden = true
         self.inputText.delegate = self
@@ -56,6 +57,7 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
     }
     
     func setUpViews()  {
+
         typeHereIndicator.layer.zPosition = 1
         clearButton.layer.zPosition = 1
         AiTextOutput.roundCornersCA(CA_Corners: "upperhalf", radius: CGFloat(10.0))
