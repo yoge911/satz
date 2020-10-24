@@ -21,6 +21,7 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var languageTextField: UITextField!
     @IBOutlet weak var refLanguageTextField: UITextField!
     @IBOutlet weak var clearButton: UIButton!
+    @IBOutlet weak var introductionView: UIView!
 
     
     var referenceTranslationHidden = false
@@ -61,7 +62,7 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
         inputText.roundCornersCA(CA_Corners: "bottomhalf", radius: CGFloat(10.0))
         helperText.roundCornersCA(CA_Corners: "all", radius: CGFloat(10.0))
         clearButton.roundCornersCA(CA_Corners: "all", radius: CGFloat(8.0))
-
+        introductionView.roundCornersCA(CA_Corners: "all", radius: CGFloat(10.0))
     }
     
 
