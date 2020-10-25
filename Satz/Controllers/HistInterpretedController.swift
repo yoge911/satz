@@ -22,8 +22,7 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var refLanguageTextField: UITextField!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var introductionView: UIView!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var scroller: UIScrollView!
+
     
     var referenceTranslationHidden = false
     let deeplTranslator = DeepLTranslator()
@@ -67,6 +66,16 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
         introductionView.roundCornersCA(CA_Corners: "all", radius: CGFloat(10.0))
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
 
     
     func translationTriggerAnimations() {
@@ -82,9 +91,9 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
     }
     
     func translationCompletedState(textPresent: Bool) {
-//        UIView.animate(withDuration: 0.2, animations: {
-//            self.AiColloquial.transform = .identity
-//        })
+        UIView.animate(withDuration: 0.2, animations: {
+            self.AiColloquial.transform = .identity
+        })
         
         if (!textPresent) {
             self.typeHereIndicator.isHidden = false
@@ -96,7 +105,7 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
     }
 
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        //translationTriggerAnimations()
+        translationTriggerAnimations()
         self.typeHereIndicator.isHidden = true
         self.clearButton.isHidden = false
         return true
