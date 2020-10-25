@@ -34,7 +34,6 @@ class WelcomePopupController: UIViewController {
             self.performSegue(withIdentifier: "alreadyLoggedInSegue", sender: nil)
         }
     }
-    
 
     
     func setupFBLoginButton() {

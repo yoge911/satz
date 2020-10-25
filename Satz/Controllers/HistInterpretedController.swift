@@ -13,17 +13,17 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
     
 
     @IBOutlet weak var AiColloquial: UIView!
-//    @IBOutlet weak var referenceTranslationView: UIView!
     @IBOutlet weak var inputText: UITextView!
     @IBOutlet weak var AiTextOutput: UITextView!
     @IBOutlet weak var helperText: UITextView!
     @IBOutlet weak var typeHereIndicator : UILabel!
     @IBOutlet weak var languageTextField: UITextField!
     @IBOutlet weak var refLanguageTextField: UITextField!
-    @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var introductionView: UIView!
-
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var clearAllButton : UIButton!
     
+
     var referenceTranslationHidden = false
     let deeplTranslator = DeepLTranslator()
     var deeplInputSourceLanguage = 0
@@ -31,15 +31,18 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
     
     var languagePickerView = UIPickerView()
     var refLanguagePickerView = UIPickerView()
+    let YtranslationsForViews = CGFloat(40.0)
+    
+    @IBAction func clearAll(_sender: UIButton) {
+        clearTexts()
+        self.translationCompletedState(textPresent: false)
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        //contentView.backgroundColor = UIColor.systemPink
+
         self.hideKeyboardWhenTappedAround()
-        self.clearButton.isHidden = true
         self.inputText.delegate = self
         self.AiTextOutput.delegate = self
         self.helperText.delegate = self
@@ -58,13 +61,40 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
     func setUpViews()  {
 
         typeHereIndicator.layer.zPosition = 1
-        clearButton.layer.zPosition = 1
         AiTextOutput.roundCornersCA(CA_Corners: "upperhalf", radius: CGFloat(10.0))
         inputText.roundCornersCA(CA_Corners: "bottomhalf", radius: CGFloat(10.0))
         helperText.roundCornersCA(CA_Corners: "all", radius: CGFloat(10.0))
-        clearButton.roundCornersCA(CA_Corners: "all", radius: CGFloat(8.0))
         introductionView.roundCornersCA(CA_Corners: "all", radius: CGFloat(10.0))
+        addDoneButtonOnKeyboard()
+  
     }
+    
+    func addDoneButtonOnKeyboard(){
+            let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+            doneToolbar.barStyle = .default
+
+            let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
+            let clear: UIBarButtonItem = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(self.clearTexts))
+
+            let items = [flexSpace, clear, done]
+            doneToolbar.items = items
+            doneToolbar.sizeToFit()
+
+            inputText.inputAccessoryView = doneToolbar
+        }
+
+        @objc func doneButtonAction(){
+            inputText.resignFirstResponder()
+            
+        }
+    
+        @objc func clearTexts(){
+            self.inputText.text = ""
+            self.AiTextOutput.text = ""
+            self.helperText.text = ""
+        }
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -76,14 +106,15 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-
-    
     func translationTriggerAnimations() {
-        let YposToReach = CGFloat(30.0)
+        let YposToReach = YtranslationsForViews
         let YposToReachFrom = self.AiColloquial.frame.origin.y
         let translationY = -(YposToReachFrom - YposToReach)
+        scrollView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: false)
         UIView.animate(withDuration: 0.2) {
-            self.AiColloquial.transform = CGAffineTransform(translationX: 0, y: translationY)
+            
+            self.introductionView.transform = CGAffineTransform(translationX: -500, y: 0)
+            self.view.transform = CGAffineTransform(translationX: 0, y: translationY)
        
         } completion: { (bool) in
             self.referenceTranslationHidden = bool
@@ -91,28 +122,42 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
     }
     
     func translationCompletedState(textPresent: Bool) {
+        scrollView.setContentOffset(CGPoint(x: 0.0, y: -(YtranslationsForViews)), animated: false)
         UIView.animate(withDuration: 0.2, animations: {
-            self.AiColloquial.transform = .identity
+            self.introductionView.transform = .identity
+            self.view.transform = .identity
         })
         
         if (!textPresent) {
             self.typeHereIndicator.isHidden = false
-            self.clearButton.isHidden = true
+            self.introductionView.transform = .identity
+            
+
         }else {
             self.typeHereIndicator.isHidden = true
-            self.clearButton.isHidden = false
+            let YposToReach = YtranslationsForViews
+            let YposToReachFrom = self.AiColloquial.frame.origin.y
+            let translationY = -(YposToReachFrom - YposToReach)
+            scrollView.setContentOffset(CGPoint(x: 0.0, y: -(translationY)), animated: true)
+            self.introductionView.transform = CGAffineTransform(translationX: -500, y: 0)
+            
         }
+        clearAllButton.isHidden = !textPresent
     }
 
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         translationTriggerAnimations()
         self.typeHereIndicator.isHidden = true
-        self.clearButton.isHidden = false
-        return true
+        let isLanguageSelected = isSuitableSourceLanguageSelected()
+        if(!isLanguageSelected){
+            translationCompletedState(textPresent: false)
+            
+        }
+        return isLanguageSelected
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        if (isSuitableSourceLanguageSelected()) {
+        
             if textView.isEqual(self.inputText) {
                 self.deeplTranslator.fetchTranslation(
                     text: self.inputText.text,
@@ -125,7 +170,7 @@ class HistInterpretedController: UIViewController, UITextViewDelegate {
                     self.helperText.text =  translations[0]
                 }
             }
-        }
+        
 
     }
     
@@ -194,6 +239,12 @@ extension HistInterpretedController: UIPickerViewDelegate, UIPickerViewDataSourc
         if (pickerView .isEqual(languagePickerView)) {
             languageTextField.text = selectedLanguage
             deeplInputSourceLanguage = row
+            
+            if (refLanguageTextField.text == "") {
+                let defaultHelperLanguage = self.deeplTranslator.deepLsupportedLanguages[deeplOutputRefTargetLanguage].key + " (Default)"
+                refLanguageTextField.text = defaultHelperLanguage
+            }
+
         }
         if (pickerView.isEqual(refLanguagePickerView)){
             refLanguageTextField.text = selectedLanguage
